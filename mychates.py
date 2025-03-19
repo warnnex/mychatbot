@@ -58,12 +58,7 @@ async def send_message(update: Update, context: CallbackContext) -> int:
         if update.message.text:
             await context.bot.send_message(receiver_id, f"📩 Новое анонимное сообщение:\n\n{update.message.text}")
         elif update.message.photo:
-            caption = update.message.caption if update.message.caption else "Описание отсутствует."
-            await context.bot.send_photo(
-                receiver_id, 
-                update.message.photo[-1].file_id, 
-                caption=f"📩 Новое анонимное фото\n\n{caption}"
-            )
+            await context.bot.send_photo(receiver_id, update.message.photo[-1].file_id, caption="📩 Новое анонимное фото")
 
         await update.message.reply_text("✅ Успешно отправлено!")
         return ConversationHandler.END
