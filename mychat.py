@@ -97,6 +97,7 @@ def main():
     application.add_handler(CommandHandler('send', send_command))
     application.add_handler(conv_handler)
 
+    # Запуск бота
     application.run_polling()
 
 if __name__ == '__main__':

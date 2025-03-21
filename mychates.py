@@ -58,7 +58,12 @@ async def send_message(update: Update, context: CallbackContext) -> int:
         if update.message.text:
             await context.bot.send_message(receiver_id, f"📩 Новое анонимное сообщение:\n\n{update.message.text}")
         elif update.message.photo:
-            await context.bot.send_photo(receiver_id, update.message.photo[-1].file_id, caption="📩 Новое анонимное фото")
+            caption = update.message.caption if update.message.caption else "Описание отсутствует."
+            await context.bot.send_photo(
+                receiver_id, 
+                update.message.photo[-1].file_id, 
+                caption=f"📩 Новое анонимное фото\n\n{caption}"
+            )
 
         await update.message.reply_text("✅ Успешно отправлено!")
         return ConversationHandler.END
@@ -92,6 +97,7 @@ def main():
     application.add_handler(CommandHandler('send', send_command))
     application.add_handler(conv_handler)
 
+    # Запуск бота
     application.run_polling()
 
 if __name__ == '__main__':
